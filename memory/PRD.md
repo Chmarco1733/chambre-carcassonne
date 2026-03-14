@@ -45,29 +45,44 @@ Créer un site web professionnel SEO-optimisé pour une chambre d'hôtes avec :
 1. **Header** - Navigation sticky avec menu mobile responsive
 2. **Hero Section** - Grande image de Carcassonne avec formulaire de réservation rapide
 3. **SEO Content Section** - Texte optimisé pour référencement naturel
-4. **Rooms Section** - 3 chambres avec détails (Vignoble, Cité, Suite Familiale)
-5. **Booking System** - Système de réservation complet avec calendrier interactif
-6. **Tourism Section** - Points d'intérêt + Google Maps intégré
-7. **Reviews Section** - Avis clients avec notes 5 étoiles
-8. **Contact Section** - Formulaire + informations de contact
-9. **Footer** - Navigation, contact, réseaux sociaux, SEO keywords
+4. **Rooms Section** - 3 chambres avec détails + **Tarification dynamique saisonnière**
+5. **Premium Services Section** - 4 services exclusifs (2CV, Piscine, Hammam, Jardin Zen)
+6. **Booking System** - Système de réservation avec calendrier + **calcul prix saisonnier**
+7. **Tourism Section** - Points d'intérêt + Google Maps intégré
+8. **Reviews Section** - Avis clients avec notes 5 étoiles
+9. **Contact Section** - Formulaire + informations de contact
+10. **Footer** - Navigation, contact, réseaux sociaux, SEO keywords
+11. **Pages légales** - Mentions légales et Politique de confidentialité
 
 **Fonctionnalités frontend:**
 - Navigation smooth scroll entre sections
+- **Système de tarification dynamique selon 3 saisons** (basse -15%, moyenne, haute +20%)
+- Sélecteur de mois pour visualiser les prix selon la saison
 - Calendrier interactif pour sélection de dates
-- Calcul automatique du prix total
+- Calcul automatique du prix total avec tarif saisonnier
 - Détection des dates déjà réservées (mock)
 - Formulaires de réservation et contact avec validation
 - Toasts de confirmation (Sonner)
 - Design responsive (desktop, tablet, mobile)
 - Menu mobile hamburger
 
+**Services Premium ajoutés:**
+1. **Excursions en 2CV Citroën** - Balades guidées dans les vignobles et villages médiévaux
+2. **Piscine extérieure 8m x 4m** - Chauffée, dans jardin méditerranéen
+3. **Hammam privatif** - Dans la Suite Familiale
+4. **Jardin zen avec bassin à carpes Koi** - Espace méditation
+
 **Design:**
 - Palette: Beige (#F5F5DC), Olive Green (#6B8E23), Terracotta (#E2725B), White
 - Style boutique hotel/luxury
-- Images professionnelles de Carcassonne (12 images Unsplash/Pexels)
+- 20 images professionnelles (12 initiales + 8 services premium)
 - Animations et transitions smooth
 - Composants Shadcn UI
+
+**Tarification saisonnière:**
+- **Basse saison** (Jan, Fév, Mar, Nov, Déc) : -15%
+- **Moyenne saison** (Avr, Mai, Sep, Oct) : Tarif normal
+- **Haute saison** (Juin, Juil, Août) : +20%
 
 **SEO:**
 - Meta title et description optimisés
@@ -129,19 +144,38 @@ POST   /api/notifications/sms   - Envoyer SMS de confirmation (optionnel)
 }
 ```
 
-**Room:**
-```javascript
-{
-  id: string,
-  name: string,
-  description: string,
-  capacity: string,
-  price: number,
-  image: string,
-  amenities: string[],
-  available: boolean
-}
-```
+export const rooms = [
+  {
+    id: 1,
+    name: 'Chambre Vignoble',
+    description: 'Chambre spacieuse avec vue sur les vignobles environnants. Décoration authentique alliant charme traditionnel et confort moderne.',
+    capacity: '2 personnes',
+    basePrice: 95, // Prix de base en moyenne saison
+    image: 'https://images.unsplash.com/photo-1562438668-bcf0ca6578f0',
+    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'poolAccess'],
+    available: true
+  },
+  {
+    id: 2,
+    name: 'Chambre Cité',
+    description: 'Chambre élégante offrant une atmosphère paisible et relaxante.',
+    capacity: '2 personnes',
+    basePrice: 110,
+    image: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0',
+    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'balcony', 'poolAccess'],
+    available: true
+  },
+  {
+    id: 3,
+    name: 'Suite Familiale',
+    description: 'Suite spacieuse avec hammam privatif. Idéale pour les familles.',
+    capacity: '4 personnes',
+    basePrice: 150,
+    image: 'https://images.pexels.com/photos/1329711/pexels-photo-1329711.jpeg',
+    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'kitchen', 'hammam', 'poolAccess'],
+    available: true
+  }
+];
 
 ### Intégrations à implémenter
 

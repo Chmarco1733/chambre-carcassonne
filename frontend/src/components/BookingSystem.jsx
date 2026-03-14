@@ -8,7 +8,7 @@ import { Label } from './ui/label';
 import { Calendar } from './ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { rooms, bookedDates } from '../utils/mockData';
+import { rooms, bookedDates, calculateSeasonalPrice, getSeasonByMonth } from '../utils/mockData';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { toast } from 'sonner';
@@ -34,7 +34,12 @@ const BookingSystem = () => {
     if (!room) return 0;
     
     const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
-    return nights * room.price;
+    
+    // Calculate price based on check-in month season
+    const checkInMonth = checkInDate.getMonth() + 1;
+    const seasonalPrice = calculateSeasonalPrice(room.basePrice, checkInMonth);
+    
+    return nights * seasonalPrice;
   };
 
   const isDateBooked = (date) => {
@@ -318,11 +323,21 @@ const BookingSystem = () => {
 
                   {totalPrice > 0 && (
                     <div className="pt-4">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-gray-600">
-                          {selectedRoom && rooms.find(r => r.id.toString() === selectedRoom)?.price}€ × {nights} nuit{nights > 1 ? 's' : ''}
-                        </span>
-                        <span className="font-semibold">{totalPrice}€</span>
+                      <div className="space-y-2 mb-4">
+                        {checkInDate && (
+                          <div className="flex justify-between items-center text-sm">
+                            <span className="text-gray-600">Saison</span>
+                            <span className="font-medium text-[#6B8E23]">
+                              {getSeasonByMonth(checkInDate.getMonth() + 1).name}
+                            </span>
+                          </div>
+                        )}
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600">
+                            {selectedRoom && calculateSeasonalPrice(rooms.find(r => r.id.toString() === selectedRoom)?.basePrice, checkInDate?.getMonth() + 1)}€ × {nights} nuit{nights > 1 ? 's' : ''}
+                          </span>
+                          <span className="font-semibold">{totalPrice}€</span>
+                        </div>
                       </div>
                       <div className="flex justify-between items-center text-xl font-bold pt-4 border-t">
                         <span>Total</span>

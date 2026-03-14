@@ -9,7 +9,48 @@ export const images = {
   vineyardSecondary: 'https://images.unsplash.com/photo-1678784845141-ad88424b6202?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwyfHxGcmVuY2glMjB2aW5leWFyZHxlbnwwfHx8fDE3NzM0NTY5MjF8MA&ixlib=rb-4.1.0&q=85',
   countryside: 'https://images.unsplash.com/photo-1729799635070-cd0c54160d9c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxGcmVuY2glMjBjb3VudHJ5c2lkZXxlbnwwfHx8fDE3NzM0NTY5MjZ8MA&ixlib=rb-4.1.0&q=85',
   countrysideSecondary: 'https://images.unsplash.com/photo-1560706834-afe1ba5d6737?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwzfHxGcmVuY2glMjBjb3VudHJ5c2lkZXxlbnwwfHx8fDE3NzM0NTY5MjZ8MA&ixlib=rb-4.1.0&q=85',
-  countrysideTertiary: 'https://images.unsplash.com/photo-1573031522107-b9447e67479c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxGcmVuY2glMjBjb3VudHJ5c2lkZXxlbnwwfHx8fDE3NzM0NTY5MjZ8MA&ixlib=rb-4.1.0&q=85'
+  countrysideTertiary: 'https://images.unsplash.com/photo-1573031522107-b9447e67479c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxGcmVuY2glMjBjb3VudHJ5c2lkZXxlbnwwfHx8fDE3NzM0NTY5MjZ8MA&ixlib=rb-4.1.0&q=85',
+  // Premium services images
+  citroen2cv: 'https://images.unsplash.com/photo-1627756355834-e8f8e0b0de17',
+  citroen2cvCountryside: 'https://images.unsplash.com/photo-1729799635070-cd0c54160d9c',
+  pool: 'https://images.unsplash.com/photo-1729719022559-34978ede47d1',
+  poolSecondary: 'https://images.unsplash.com/photo-1661333587575-25c87c14f398',
+  hammam: 'https://images.unsplash.com/photo-1760564019103-81cd3c225cd1',
+  hammamSecondary: 'https://images.unsplash.com/photo-1604161926875-bb58f9a0d81b',
+  zenGarden: 'https://images.unsplash.com/photo-1770057728274-50fc5130a9f2',
+  koiPond: 'https://images.unsplash.com/photo-1759495381644-be4b35d59aef'
+};
+
+// Pricing seasons
+export const seasons = {
+  lowSeason: {
+    name: 'Basse saison',
+    months: [1, 2, 3, 11, 12], // Janvier, Février, Mars, Novembre, Décembre
+    discount: 0.85 // 15% de réduction
+  },
+  midSeason: {
+    name: 'Moyenne saison',
+    months: [4, 5, 9, 10], // Avril, Mai, Septembre, Octobre
+    discount: 1.0 // Prix normal
+  },
+  highSeason: {
+    name: 'Haute saison',
+    months: [6, 7, 8], // Juin, Juillet, Août
+    discount: 1.2 // +20%
+  }
+};
+
+// Function to get season by month
+export const getSeasonByMonth = (month) => {
+  if (seasons.lowSeason.months.includes(month)) return seasons.lowSeason;
+  if (seasons.highSeason.months.includes(month)) return seasons.highSeason;
+  return seasons.midSeason;
+};
+
+// Function to calculate price based on season
+export const calculateSeasonalPrice = (basePrice, month) => {
+  const season = getSeasonByMonth(month);
+  return Math.round(basePrice * season.discount);
 };
 
 export const rooms = [
@@ -18,9 +59,9 @@ export const rooms = [
     name: 'Chambre Vignoble',
     description: 'Chambre spacieuse avec vue sur les vignobles environnants. Décoration authentique alliant charme traditionnel et confort moderne.',
     capacity: '2 personnes',
-    price: 95,
+    basePrice: 95,
     image: 'https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBiZWRyb29tfGVufDB8fHx8MTc3MzQ1NjkxNXww&ixlib=rb-4.1.0&q=85',
-    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac'],
+    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'poolAccess'],
     available: true
   },
   {
@@ -28,19 +69,19 @@ export const rooms = [
     name: 'Chambre Cité',
     description: 'Chambre élégante offrant une atmosphère paisible et relaxante. Parfaite pour un séjour romantique près de Carcassonne.',
     capacity: '2 personnes',
-    price: 110,
+    basePrice: 110,
     image: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBiZWRyb29tfGVufDB8fHx8MTc3MzQ1NjkxNXww&ixlib=rb-4.1.0&q=85',
-    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'balcony'],
+    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'balcony', 'poolAccess'],
     available: true
   },
   {
     id: 3,
     name: 'Suite Familiale',
-    description: 'Suite spacieuse pouvant accueillir jusqu\'à 4 personnes. Idéale pour les familles souhaitant découvrir la région de Carcassonne.',
+    description: 'Suite spacieuse pouvant accueillir jusqu\'à 4 personnes avec salle de bain équipée d\'un hammam. Idéale pour les familles souhaitant découvrir la région de Carcassonne.',
     capacity: '4 personnes',
-    price: 150,
+    basePrice: 150,
     image: 'https://images.pexels.com/photos/1329711/pexels-photo-1329711.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'kitchen'],
+    amenities: ['wifi', 'bathroom', 'breakfast', 'parking', 'ac', 'kitchen', 'hammam', 'poolAccess'],
     available: true
   }
 ];
@@ -52,8 +93,74 @@ export const amenitiesIcons = {
   parking: { label: 'Parking gratuit', icon: 'Car' },
   ac: { label: 'Climatisation', icon: 'Wind' },
   balcony: { label: 'Balcon', icon: 'Home' },
-  kitchen: { label: 'Kitchenette', icon: 'UtensilsCrossed' }
+  kitchen: { label: 'Kitchenette', icon: 'UtensilsCrossed' },
+  hammam: { label: 'Hammam privatif', icon: 'Sparkles' },
+  poolAccess: { label: 'Accès piscine', icon: 'Waves' }
 };
+
+// Premium services / "Nos Plus"
+export const premiumServices = [
+  {
+    id: 1,
+    name: 'Excursions en 2CV Citroën',
+    description: 'Découvrez la région de Carcassonne et ses environs à bord d\'une authentique 2CV Citroën. Balade guidée dans les vignobles, villages médiévaux et paysages pittoresques de l\'Aude.',
+    image: images.citroen2cv,
+    icon: 'Car',
+    features: [
+      'Voiture vintage authentique',
+      'Chauffeur guide expérimenté',
+      'Circuits personnalisés',
+      'Découverte des vignobles',
+      'Villages médiévaux'
+    ],
+    price: 'Sur demande'
+  },
+  {
+    id: 2,
+    name: 'Piscine extérieure chauffée',
+    description: 'Profitez de notre magnifique piscine extérieure de 8m x 4m, nichée dans un jardin méditerranéen. Transats et parasols à disposition pour des moments de détente absolue.',
+    image: images.pool,
+    icon: 'Waves',
+    features: [
+      'Dimensions: 8m x 4m',
+      'Eau chauffée en saison',
+      'Transats et parasols',
+      'Jardin méditerranéen',
+      'Vue dégagée sur la campagne'
+    ],
+    price: 'Inclus'
+  },
+  {
+    id: 3,
+    name: 'Hammam privatif',
+    description: 'La Suite Familiale dispose d\'un hammam privatif dans sa salle de bain. Moment de détente et de bien-être garanti après vos visites touristiques.',
+    image: images.hammam,
+    icon: 'Sparkles',
+    features: [
+      'Hammam privatif',
+      'Suite Familiale uniquement',
+      'Produits de soin naturels',
+      'Serviettes moelleuses',
+      'Ambiance zen'
+    ],
+    price: 'Inclus (Suite)'
+  },
+  {
+    id: 4,
+    name: 'Jardin zen & Bassin à carpes Koi',
+    description: 'Ressourcez-vous dans notre jardin zen japonais avec son bassin de carpes Koi. Un havre de paix pour méditer et se reconnecter avec la nature.',
+    image: images.zenGarden,
+    icon: 'Flower2',
+    features: [
+      'Jardin japonais authentique',
+      'Bassin avec carpes Koi',
+      'Espace méditation',
+      'Végétation zen',
+      'Accès libre'
+    ],
+    price: 'Inclus'
+  }
+];
 
 export const reviews = [
   {

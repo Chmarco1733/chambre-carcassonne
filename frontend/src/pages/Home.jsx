@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Hero from '../components/Hero';
 import SEOContent from '../components/SEOContent';
 import Rooms from '../components/Rooms';
+import PremiumServices from '../components/PremiumServices';
 import BookingSystem from '../components/BookingSystem';
 import Tourism from '../components/Tourism';
 import Reviews from '../components/Reviews';
@@ -44,6 +45,7 @@ const Home = () => {
         <Hero />
         <SEOContent />
         <Rooms />
+        <PremiumServices />
         <BookingSystem />
         <Tourism />
         <Reviews />
